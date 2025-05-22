@@ -12,6 +12,44 @@
 - Docker support for reproducibility
 
 ---
+## 🔧 System requirements
+
+- Linux system (Tested on Ubuntu 20.0.4)
+- Windows system with Docker enviromnment (Tested on Windows 10)
+
+---
+## 🔧 Software requirements
+
+Install following softwares and make sure the binary files are in the environmental path.
+
+- kallisto (Tested on v0.46.1, https://github.com/pachterlab/kallisto/releases/download/v0.46.1/kallisto_linux-v0.46.1.tar.gz)
+- gffread (Tested on v0.12.7, https://github.com/gpertea/gffread/releases/download/v0.12.7/gffread-0.12.7.Linux_x86_64.tar.gz)
+- seqkit (Tested on v2.1.0, https://github.com/shenwei356/seqkit/releases/download/v2.10.0/seqkit_linux_amd64.tar.gz)
+- gffcompare (Tested on v0.12.6, http://ccb.jhu.edu/software/stringtie/dl/gffcompare-0.12.6.Linux_x86_64.tar.gz)
+
+For example,
+```bash
+wget https://github.com/gpertea/gffread/releases/download/v0.12.7/gffread-0.12.7.Linux_x86_64.tar.gz && \
+    tar -xzf gffread-0.12.7.Linux_x86_64.tar.gz && \
+    mv gffread-0.12.7.Linux_x86_64/gffread /usr/local/bin/ && \
+    rm -r gffread-0.12.7.Linux_x86_64*
+
+wget https://github.com/pachterlab/kallisto/releases/download/v0.46.1/kallisto_linux-v0.46.1.tar.gz && \
+    tar -xzf kallisto_linux-v0.46.1.tar.gz && \
+    mv kallisto/kallisto /usr/local/bin/ && \
+    rm -r kallisto*
+
+wget https://github.com/shenwei356/seqkit/releases/download/v2.10.0/seqkit_linux_amd64.tar.gz && \
+    tar -xzf seqkit_linux_amd64.tar.gz && \
+    mv seqkit /usr/local/bin/ && \
+    rm -r seqkit*
+
+wget http://ccb.jhu.edu/software/stringtie/dl/gffcompare-0.12.6.Linux_x86_64.tar.gz && \
+    tar -xzf gffcompare-0.12.6.Linux_x86_64.tar.gz && \
+    mv gffcompare-0.12.6.Linux_x86_64/gffcompare /usr/local/bin && \
+    rm -r gffcompare*
+```
+---
 
 ## 📦 Installation
 
@@ -31,11 +69,15 @@ R CMD build .
 R CMD INSTALL Sciege_*.tar.gz
 ```
 
+If you run into installation issues we strongly recommend using docker environment to avoid any depedency conflicts in R. In normal R environment, installation should take less than 10 minutes.
+
 ---
 
 ## 🐳 Docker Support
 
-Build the Docker image:
+
+Please refer to official docker website for installation (https://www.docker.com/). 
+In your Sciege directory, build the Docker image (typically takes around 15 mins):
 
 ```bash
 docker build -t sciege .
@@ -90,8 +132,9 @@ Sciege/
 
 ---
 
-## 🧪 Running Tests
+## 🧪 Running Demos
 
+To see example run of the pipeline with small sub set of files run following commands. Typical run of all tests should take less than 5 mins.
 From R:
 
 ```r
@@ -102,6 +145,14 @@ Or from command line (in Docker):
 
 ```bash
 docker run -v $PWD:/pkg sciege Rscript -e 'devtools::test("/pkg")'
+```
+
+If test runs successfully, following results should appear at the end of stdout.
+
+```
+══ Results ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════Duration: 17.4 s
+
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 25 ]
 ```
 
 ---
